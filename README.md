@@ -12,6 +12,9 @@
 
 本工具仅用于研究辅助和过程复盘，不会下单，也不构成投资建议。
 
+<img width="1005" height="838" alt="image" src="https://github.com/user-attachments/assets/eb478552-19d2-4bea-a6ee-45775dfa3bc1" />
+<img width="1011" height="848" alt="image" src="https://github.com/user-attachments/assets/64d21804-23f2-4902-8f9f-2a338331d666" />
+
 ## 安装
 
 ```sh
