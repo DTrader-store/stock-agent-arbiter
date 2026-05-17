@@ -1,43 +1,76 @@
 # Stock Agent Arbiter
 
-Python + LangGraph CLI for a read-only stock evidence debate:
+一个基于 Python、DTrader V3 和 LangGraph 的股票 AI Agent 命令行工具，用于围绕同一份只读行情数据生成买卖双方证据辩论和仲裁汇总。
 
-1. Fetch a shared DTrader V3 market-data snapshot for one stock code.
-2. Ask buyer and seller roles to extract opposing evidence from that same snapshot.
-3. Run three debate rounds.
-4. Produce an arbiter evidence-strength summary.
-5. Render the process in Rich and save a Markdown report.
+流程：
 
-This tool is for research assistance and process review only. It does not place orders and does not provide investment advice.
+1. 为单只股票获取一份共享的 DTrader V3 市场数据快照。
+2. 让买方和卖方角色基于同一份快照提取相反方向的证据。
+3. 执行三轮买卖双方辩论。
+4. 生成仲裁者视角的证据强弱汇总。
+5. 使用 Rich 在终端展示完整过程，并保存 Markdown 报告。
 
-## Setup
+本工具仅用于研究辅助和过程复盘，不会下单，也不构成投资建议。
+
+## 安装
 
 ```sh
 uv sync
 ```
 
-Configure environment variables:
+## 配置
+
+配置环境变量：
 
 ```sh
 export DTRADER_BASE_URL="https://your-endpoint"
 export DTRADER_AUTH="your key"
 export OPENAI_API_KEY="your key"
 export OPENAI_MODEL="your model"
-# Optional for OpenAI-compatible providers:
+# OpenAI 兼容服务可选：
 export OPENAI_BASE_URL="https://your-compatible-endpoint/v1"
-# Optional report directory:
+# 报告目录可选：
 export STOCK_AGENT_OUTPUT_DIR="reports"
 ```
 
-Run:
+也可以参考 `.env.example` 创建本地 `.env` 文件。
+
+## 运行
 
 ```sh
 uv run stock-agent-arbiter 600519
 ```
 
-## Scope
+运行后会在终端展示：
 
-- Input: one stock code.
-- V3 access: read-only market data through `dtrader-v3-sdk`.
-- Output: Rich terminal panels plus `reports/{code}-{timestamp}.md`.
-- Not supported in v1: batch input, free-text stock questions, HTTP API, Web UI, JSON export, account access, position access, or trading mutations.
+- V3 数据快照状态
+- 买方证据
+- 卖方证据
+- 三轮辩论
+- 仲裁汇总
+- Markdown 报告路径
+
+报告默认保存到：
+
+```text
+reports/{code}-{timestamp}.md
+```
+
+## 范围
+
+- 输入：单个股票代码。
+- V3 访问：通过 `dtrader-v3-sdk` 读取只读市场数据。
+- 输出：Rich 终端面板和 `reports/{code}-{timestamp}.md` Markdown 报告。
+- 部分数据源不可用时：继续使用已有数据生成辩论，并把不可用来源记录为证据缺口。
+- 所有数据源都不可用时：中止辩论，只记录数据状态。
+
+## 当前不支持
+
+- 批量股票输入
+- 自由文本股票问答
+- HTTP API
+- Web UI
+- JSON 导出
+- 账户访问
+- 持仓访问
+- 交易相关写操作
